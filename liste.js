@@ -30,25 +30,29 @@ hentData();
 function buildSelects(uniqueCuisines) {
   let markup1 = uniqueCuisines.map((cuisine) => ` <option value="${cuisine}">${cuisine}</option>`).join("");
   let markup2 = uniqueMTypes.map((element) => ` <option value="${element}">${element}</option>`).join("");
-  selectCuisine.innerHTML = markup1;
-  selectMealType.innerHTML = markup2;
+  selectCuisine.innerHTML += markup1;
+  selectMealType.innerHTML += markup2;
 }
 
 //img src="${opskrift.image}" alt="meal">
 
 function visListe(data) {
   console.log(data);
-  let markup = data
-    .map(
-      (opskrift) => `        
+  if (data.length > 0) {
+    let markup = data
+      .map(
+        (opskrift) => `        
     <article>
     <h2>${opskrift.name}</h2>
             <p>${opskrift.cuisine}</p>
             <p>${opskrift.mealType}</p>
         </article>`
-    )
-    .join("");
-  container.innerHTML = markup;
+      )
+      .join("");
+    container.innerHTML = markup;
+  } else {
+    container.innerHTML = `<h2>No ${cuisine} ${mealType}</h2>`;
+  }
 }
 
 function filterCuisine(event) {
