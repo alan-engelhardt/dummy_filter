@@ -1,4 +1,5 @@
 const container = document.querySelector("main");
+const h2 = document.querySelector("h2");
 const selectCuisine = document.querySelector("#cuisine");
 const selectMealType = document.querySelector("#mealType");
 selectCuisine.addEventListener("change", filterCuisine);
@@ -41,6 +42,7 @@ function visListe(data) {
 
 function filterCuisine(event) {
   cuisine = event.target.value;
+  h2.textContent = cuisine;
   if (cuisine == "All") {
     visListe(listeData);
   } else {
@@ -51,6 +53,7 @@ function filterCuisine(event) {
 
 function filterMealType(event) {
   mealType = event.target.value;
+  h2.textContent = cuisine + " > " + mealType;
   if (mealType == "All") {
     visListe(listeData);
   } else {
