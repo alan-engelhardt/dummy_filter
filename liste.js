@@ -35,7 +35,9 @@ function buildSelects() {
 
 function visListe(data) {
   //console.log(data);
+  //console.log(data);
   if (data.length > 0) {
+    const markup = data;
     const markup = data
       .map(
         (opskrift) => `        
