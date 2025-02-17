@@ -6,7 +6,9 @@ selectMealType.addEventListener("change", filterMealType);
 const url = "https://dummyjson.com/recipes";
 
 let allRecipes,
-  listData,
+  listData = allRecipes,
+  cuisineData,
+  mealTypeData,
   cuisine = "all",
   mealType = "all";
 
@@ -22,7 +24,7 @@ hentData();
 //img src="${opskrift.image}" alt="meal">
 
 function visListe(data) {
-  console.log(data);
+  //console.log(data);
   let markup = data
     .map(
       (opskrift) => `        
@@ -39,9 +41,23 @@ function visListe(data) {
 function filterCuisine(event) {
   cuisine = event.target.value;
   console.log(cuisine);
+  if (cuisine == "All") {
+    visListe(allRecipes);
+  } else {
+    cuisineData = allRecipes.filter((recipe) => recipe.cuisine == cuisine);
+    console.log(cuisineData);
+    visListe(cuisineData);
+  }
 }
 
 function filterMealType(event) {
   mealType = event.target.value;
   console.log(mealType);
+  if (mealType == "All") {
+    visListe(allRecipes);
+  } else {
+    mealTypeData = allRecipes.filter((recipe) => recipe.mealType.includes(mealType));
+    console.log(mealTypeData);
+    visListe(mealTypeData);
+  }
 }
