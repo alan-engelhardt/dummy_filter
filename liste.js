@@ -19,13 +19,14 @@ function hentData() {
 
 hentData();
 
+//img src="${opskrift.image}" alt="meal">
+
 function visListe(data) {
   console.log(data);
   let markup = data
     .map(
       (opskrift) => `        
     <article>
-    <img src="${opskrift.image}" alt="meal">
     <h2>${opskrift.name}</h2>
             <p>${opskrift.cuisine}</p>
             <p>${opskrift.mealType}</p>
