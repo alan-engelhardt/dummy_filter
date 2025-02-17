@@ -8,6 +8,7 @@ const url = "https://dummyjson.com/recipes";
 
 let allRecipes,
   listeData,
+  uniqueCuisines,
   cuisine = "all",
   mealType = "all";
 
@@ -17,16 +18,26 @@ function hentData() {
     .then((data) => {
       allRecipes = data.recipes;
       listeData = allRecipes;
+      uniqueCuisines = Array.from(new Set(allRecipes.map((recipe) => recipe.cuisine)));
+      uniqueMTypes = Array.from(new Set(allRecipes.map((recipe) => recipe.mealType[0])));
+      buildSelects(uniqueCuisines);
       visListe(allRecipes);
     });
 }
 
 hentData();
 
+function buildSelects(uniqueCuisines) {
+  let markup1 = uniqueCuisines.map((cuisine) => ` <option value="${cuisine}">${cuisine}</option>`).join("");
+  let markup2 = uniqueMTypes.map((element) => ` <option value="${element}">${element}</option>`).join("");
+  selectCuisine.innerHTML = markup1;
+  selectMealType.innerHTML = markup2;
+}
+
 //img src="${opskrift.image}" alt="meal">
 
 function visListe(data) {
-  //console.log(data);
+  console.log(data);
   let markup = data
     .map(
       (opskrift) => `        
