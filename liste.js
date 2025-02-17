@@ -34,15 +34,14 @@ function buildSelects() {
   selectMealType.innerHTML = ' <option value="All">All</option>' + markup2;
 }
 
-//img src="${opskrift.image}" alt="meal">
-
 function visListe(data) {
-  console.log(data.length);
+  console.log(data);
   if (data.length > 0) {
     let markup = data
       .map(
         (opskrift) => `        
-    <article>
+      <article>
+    <img src="${opskrift.image}" alt="meal">
     <h2>${opskrift.name}</h2>
             <p>${opskrift.cuisine}</p>
             <p>${opskrift.mealType}</p>
