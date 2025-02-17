@@ -27,17 +27,17 @@ hentData();
 
 function buildSelects() {
   uniqueCuisines = Array.from(new Set(allRecipes.map((recipe) => recipe.cuisine)));
-  let markup = uniqueCuisines.map((cuisine) => ` <option value="${cuisine}">${cuisine}</option>`).join("");
+  const markup = uniqueCuisines.map((cuisine) => ` <option value="${cuisine}">${cuisine}</option>`).join("");
   selectCuisine.innerHTML += markup;
   uniqueMTypes = Array.from(new Set(allRecipes.map((recipe) => recipe.mealType[0])));
-  let markup2 = uniqueMTypes.map((element) => ` <option value="${element}">${element}</option>`).join("");
+  const markup2 = uniqueMTypes.map((element) => ` <option value="${element}">${element}</option>`).join("");
   selectMealType.innerHTML = ' <option value="All">All</option>' + markup2;
 }
 
 function visListe(data) {
-  console.log(data);
+  //console.log(data);
   if (data.length > 0) {
-    let markup = data
+    const markup = data
       .map(
         (opskrift) => `        
       <article>
