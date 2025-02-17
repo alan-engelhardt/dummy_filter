@@ -4,7 +4,7 @@ const selectCuisine = document.querySelector("#cuisine");
 const selectMealType = document.querySelector("#mealType");
 selectCuisine.addEventListener("change", filterCuisine);
 selectMealType.addEventListener("change", filterMealType);
-const url = "https://dummyjson.com/recipes";
+const url = "https://dummyjson.com/recipes?limit=0";
 
 let allRecipes,
   listeData,
@@ -18,26 +18,26 @@ function hentData() {
     .then((data) => {
       allRecipes = data.recipes;
       listeData = allRecipes;
-      uniqueCuisines = Array.from(new Set(allRecipes.map((recipe) => recipe.cuisine)));
-      uniqueMTypes = Array.from(new Set(allRecipes.map((recipe) => recipe.mealType[0])));
-      buildSelects(uniqueCuisines);
+      buildSelects();
       visListe(allRecipes);
     });
 }
 
 hentData();
 
-function buildSelects(uniqueCuisines) {
-  let markup1 = uniqueCuisines.map((cuisine) => ` <option value="${cuisine}">${cuisine}</option>`).join("");
+function buildSelects() {
+  uniqueCuisines = Array.from(new Set(allRecipes.map((recipe) => recipe.cuisine)));
+  let markup = uniqueCuisines.map((cuisine) => ` <option value="${cuisine}">${cuisine}</option>`).join("");
+  selectCuisine.innerHTML += markup;
+  uniqueMTypes = Array.from(new Set(allRecipes.map((recipe) => recipe.mealType[0])));
   let markup2 = uniqueMTypes.map((element) => ` <option value="${element}">${element}</option>`).join("");
-  selectCuisine.innerHTML += markup1;
-  selectMealType.innerHTML += markup2;
+  selectMealType.innerHTML = ' <option value="All">All</option>' + markup2;
 }
 
 //img src="${opskrift.image}" alt="meal">
 
 function visListe(data) {
-  console.log(data);
+  console.log(data.length);
   if (data.length > 0) {
     let markup = data
       .map(
@@ -59,11 +59,15 @@ function filterCuisine(event) {
   cuisine = event.target.value;
   h2.textContent = cuisine;
   if (cuisine == "All") {
-    visListe(listeData);
+    listeData = allRecipes;
   } else {
     listeData = allRecipes.filter((recipe) => recipe.cuisine == cuisine);
-    visListe(listeData);
   }
+  visListe(listeData);
+
+  uniqueMTypes = Array.from(new Set(listeData.map((recipe) => recipe.mealType[0])));
+  let markup = uniqueMTypes.map((element) => ` <option value="${element}">${element}</option>`).join("");
+  selectMealType.innerHTML = ' <option value="All">All</option>' + markup;
 }
 
 function filterMealType(event) {
@@ -72,7 +76,7 @@ function filterMealType(event) {
   if (mealType == "All") {
     visListe(listeData);
   } else {
-    listeData = listeData.filter((recipe) => recipe.mealType.includes(mealType));
-    visListe(listeData);
+    const liste2Data = listeData.filter((recipe) => recipe.mealType.includes(mealType));
+    visListe(liste2Data);
   }
 }
