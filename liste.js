@@ -6,17 +6,18 @@ selectMealType.addEventListener("change", filterMealType);
 const url = "https://dummyjson.com/recipes";
 
 let allRecipes,
-  listData = allRecipes,
-  cuisineData,
-  mealTypeData,
+  listeData,
   cuisine = "all",
   mealType = "all";
 
 function hentData() {
   fetch(url)
     .then((response) => response.json())
-    .then((data) => (allRecipes = data.recipes))
-    .then((data) => visListe(data));
+    .then((data) => {
+      allRecipes = data.recipes;
+      listeData = allRecipes;
+      visListe(allRecipes);
+    });
 }
 
 hentData();
@@ -40,24 +41,20 @@ function visListe(data) {
 
 function filterCuisine(event) {
   cuisine = event.target.value;
-  console.log(cuisine);
   if (cuisine == "All") {
-    visListe(allRecipes);
+    visListe(listeData);
   } else {
-    cuisineData = allRecipes.filter((recipe) => recipe.cuisine == cuisine);
-    console.log(cuisineData);
-    visListe(cuisineData);
+    listeData = allRecipes.filter((recipe) => recipe.cuisine == cuisine);
+    visListe(listeData);
   }
 }
 
 function filterMealType(event) {
   mealType = event.target.value;
-  console.log(mealType);
   if (mealType == "All") {
-    visListe(allRecipes);
+    visListe(listeData);
   } else {
-    mealTypeData = allRecipes.filter((recipe) => recipe.mealType.includes(mealType));
-    console.log(mealTypeData);
-    visListe(mealTypeData);
+    listeData = listeData.filter((recipe) => recipe.mealType.includes(mealType));
+    visListe(listeData);
   }
 }
