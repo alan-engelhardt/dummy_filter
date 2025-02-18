@@ -5,6 +5,7 @@ const selectMealType = document.querySelector("#mealType");
 selectCuisine.addEventListener("change", filterCuisine);
 selectMealType.addEventListener("change", filterMealType);
 const url = "https://dummyjson.com/recipes?limit=0"; // limit=0 henter alle 50 opskrifter
+const url = "https://dummyjson.com/recipes?limit=0"; // limit=0 henter alle 50 opskrifter
 
 let allRecipes,
   filteredData,
@@ -26,10 +27,14 @@ hentData();
 
 function buildSelects() {
   // Først dannes et nyt array med en liste over cuisine (kun en gang hver)
+  // Først dannes et nyt array med en liste over cuisine (kun en gang hver)
   const uniqueCuisines = Array.from(new Set(allRecipes.map((recipe) => recipe.cuisine)));
+  // Herefter dannes en select-liste med de cuisines der findes i det hentede data
   // Herefter dannes en select-liste med de cuisines der findes i det hentede data
   const markup = uniqueCuisines.map((cuisine) => ` <option value="${cuisine}">${cuisine}</option>`).join("");
   selectCuisine.innerHTML += markup;
+
+  // Her dannes en anden select-liste med de mealTypes der findes i det hentede data på samme måde
 
   // Her dannes en anden select-liste med de mealTypes der findes i det hentede data på samme måde
   const uniqueMTypes = Array.from(new Set(allRecipes.map((recipe) => recipe.mealType[0])));
@@ -55,19 +60,25 @@ function visListe(data) {
 
 function filterCuisine(event) {
   // Hvilken cuisine er valgt på select-listen?
+  // Hvilken cuisine er valgt på select-listen?
   cuisine = event.target.value;
   if (cuisine == "All") {
     filteredData = allRecipes;
   } else {
     // hvis der valgt andet end "All" filtreres data med den valgte cuisine
+    // hvis der valgt andet end "All" filtreres data med den valgte cuisine
     filteredData = allRecipes.filter((recipe) => recipe.cuisine == cuisine);
   }
+  // Det filtrerede data vises
   // Det filtrerede data vises
   visListe(filteredData);
 
   // overskriften rettes så den viser, hvad der er valgt
+
+  // overskriften rettes så den viser, hvad der er valgt
   h2.textContent = cuisine + " (" + filteredData.length + ")";
 
+  // Når opskrifterne er filtreret dannes en ny liste med kun de mealTypes der findes i det filtrerede data:
   // Når opskrifterne er filtreret dannes en ny liste med kun de mealTypes der findes i det filtrerede data:
   const uniqueMTypes = Array.from(new Set(filteredData.map((recipe) => recipe.mealType[0])));
   const markup = uniqueMTypes.map((element) => `<option value="${element}">${element}</option>`).join("");
@@ -75,6 +86,7 @@ function filterCuisine(event) {
 }
 
 function filterMealType(event) {
+  // Hvilken mealType er valgt på select-listen?
   // Hvilken mealType er valgt på select-listen?
   mealType = event.target.value;
   if (mealType == "All") {
