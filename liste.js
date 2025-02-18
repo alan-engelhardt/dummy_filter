@@ -7,16 +7,16 @@ selectMealType.addEventListener("change", filterMealType);
 const url = "https://dummyjson.com/recipes?limit=0";
 
 let allRecipes,
-  listeData,
-  cuisine = "all",
-  mealType = "all";
+  filteredData,
+  cuisine = "All",
+  mealType = "All";
 
 function hentData() {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
       allRecipes = data.recipes;
-      listeData = allRecipes;
+      filteredData = allRecipes;
       buildSelects();
       visListe(allRecipes);
     });
@@ -30,7 +30,7 @@ function buildSelects() {
   selectCuisine.innerHTML += markup;
   const uniqueMTypes = Array.from(new Set(allRecipes.map((recipe) => recipe.mealType[0])));
   const markup2 = uniqueMTypes.map((element) => ` <option value="${element}">${element}</option>`).join("");
-  selectMealType.innerHTML = ' <option value="All">All</option>' + markup2;
+  selectMealType.innerHTML += markup2;
 }
 
 function visListe(data) {
@@ -56,24 +56,24 @@ function filterCuisine(event) {
   cuisine = event.target.value;
   h2.textContent = cuisine;
   if (cuisine == "All") {
-    listeData = allRecipes;
+    filteredData = allRecipes;
   } else {
-    listeData = allRecipes.filter((recipe) => recipe.cuisine == cuisine);
+    filteredData = allRecipes.filter((recipe) => recipe.cuisine == cuisine);
   }
-  visListe(listeData);
+  visListe(filteredData);
 
-  const uniqueMTypes = Array.from(new Set(listeData.map((recipe) => recipe.mealType[0])));
-  const markup = uniqueMTypes.map((element) => ` <option value="${element}">${element}</option>`).join("");
+  const uniqueMTypes = Array.from(new Set(filteredData.map((recipe) => recipe.mealType[0])));
+  const markup = uniqueMTypes.map((element) => `<option value="${element}">${element}</option>`).join("");
   selectMealType.innerHTML = '<option value="All">All</option>' + markup;
 }
 
 function filterMealType(event) {
   mealType = event.target.value;
-  h2.textContent = cuisine + " > " + mealType;
+  h2.textContent = cuisine + " / " + mealType;
   if (mealType == "All") {
-    visListe(listeData);
+    visListe(filteredData);
   } else {
-    const liste2Data = listeData.filter((recipe) => recipe.mealType.includes(mealType));
-    visListe(liste2Data);
+    const filter2data = filteredData.filter((recipe) => recipe.mealType.includes(mealType));
+    visListe(filter2data);
   }
 }
