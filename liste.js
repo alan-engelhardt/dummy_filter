@@ -85,7 +85,7 @@ function filterMealType(event) {
     // Det filtrerede data vises
     visListe(filteredMealtypeData);
 
-    // overskriften rettes så den viser, hvad der er valgt
-    h2.textContent = cuisine + " / " + mealType + "  (" + filteredMealtypeData.length + ")"; // .length giver antallet af opskrifter på den aktuelle liste
+    // overskriften rettes så den viser, hvad der er valgt. Med .length vises antallet af opskrifter på den aktuelle liste
+    h2.textContent = cuisine + " / " + mealType + "  (" + filteredMealtypeData.length + ")";
   }
 }
