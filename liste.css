@@ -6,3 +6,7 @@ main {
     width: 100%;
   }
 }
+select {
+  margin-right: 1rem;
+  margin-left: 0.3rem;
+}

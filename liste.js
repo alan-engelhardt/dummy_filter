@@ -17,7 +17,6 @@ function hentData() {
     .then((response) => response.json())
     .then((data) => {
       allRecipes = data.recipes;
-      filteredData = allRecipes;
       buildSelects();
       visListe(allRecipes);
     });
@@ -45,7 +44,6 @@ function visListe(data, event) {
         } else if (event.target.id == "mealType") {
           mealType = event.target.value;
         }
-
         if (cuisine == "All" && mealType != "All") {
           return opskrift.mealType[0] == mealType;
         } else if (mealType == "All" && cuisine != "All") {
