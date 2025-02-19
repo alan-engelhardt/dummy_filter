@@ -2,8 +2,10 @@ const container = document.querySelector("main");
 const h2 = document.querySelector("h2");
 const selectCuisine = document.querySelector("#cuisine");
 const selectMealType = document.querySelector("#mealType");
+
 selectCuisine.addEventListener("change", (e) => visListe(allRecipes, e));
 selectMealType.addEventListener("change", (e) => visListe(allRecipes, e));
+
 const url = "https://dummyjson.com/recipes?limit=0";
 
 let allRecipes,
@@ -43,6 +45,7 @@ function visListe(data, event) {
         } else if (event.target.id == "mealType") {
           mealType = event.target.value;
         }
+
         if (cuisine == "All" && mealType != "All") {
           return opskrift.mealType[0] == mealType;
         } else if (mealType == "All" && cuisine != "All") {
@@ -59,6 +62,7 @@ function visListe(data, event) {
     .map(
       (opskrift) => `        
       <article>
+      img src="${opskrift.image}" alt="meal">
     <h2>${opskrift.name}</h2>
             <p>${opskrift.cuisine}</p>
             <p>${opskrift.mealType}</p>
