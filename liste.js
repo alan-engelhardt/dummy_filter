@@ -47,10 +47,10 @@ function visListe(data, event) {
           return opskrift.mealType[0] == mealType;
         } else if (mealType == "All" && cuisine != "All") {
           return opskrift.cuisine == cuisine;
-        } else if (cuisine == "All" && mealType == "All") {
-          return true;
-        } else {
+        } else if (cuisine != "All" && mealType != "All") {
           return opskrift.cuisine == cuisine && opskrift.mealType[0] == mealType;
+        } else {
+          return true;
         }
       } else {
         return true;
@@ -69,7 +69,7 @@ function visListe(data, event) {
   container.innerHTML = markup;
   if (markup == "") {
     console.log("no meals");
-    h2.textContent = "Sorry, there are no " + cuisine + " " + mealType;
+    h2.textContent = "Sorry, there are no " + cuisine + " " + mealType + " recipes";
   } else {
     h2.textContent = cuisine + " " + mealType;
   }
