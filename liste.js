@@ -34,6 +34,7 @@ function buildSelects() {
 }
 
 function visListe(data, event) {
+  let count = 0;
   const markup = data
     .filter((opskrift) => {
       if (event) {
@@ -66,5 +67,10 @@ function visListe(data, event) {
     )
     .join("");
   container.innerHTML = markup;
-  h2.textContent = cuisine + " / " + mealType;
+  if (markup == "") {
+    console.log("no meals");
+    h2.textContent = "Sorry, there are no " + cuisine + " " + mealType;
+  } else {
+    h2.textContent = cuisine + " " + mealType;
+  }
 }
