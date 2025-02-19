@@ -7,8 +7,6 @@ selectMealType.addEventListener("change", (e) => visListe(allRecipes, e));
 const url = "https://dummyjson.com/recipes?limit=0";
 
 let allRecipes,
-  filteredData,
-  currrentListData,
   cuisine = "All",
   mealType = "All";
 
@@ -37,15 +35,22 @@ function buildSelects() {
 //<img src="${opskrift.image}" alt="meal">
 
 function visListe(data, event) {
-  console.log(event.target.value);
   const markup = data
     .filter((opskrift) => {
       if (event) {
-        console.log("der er event");
         if (event.target.id == "cuisine") {
           cuisine = event.target.value;
         } else if (event.target.id == "mealType") {
           mealType = event.target.value;
+        }
+        if (cuisine == "All" && mealType != "All") {
+          return opskrift.mealType[0] == mealType;
+        } else if (mealType == "All" && cuisine != "All") {
+          return opskrift.cuisine == cuisine;
+        } else if (cuisine == "All" && mealType == "All") {
+          return true;
+        } else {
+          return opskrift.cuisine == cuisine && opskrift.mealType[0] == mealType;
         }
       } else {
         return true;
@@ -61,28 +66,5 @@ function visListe(data, event) {
     )
     .join("");
   container.innerHTML = markup;
-  h2.textContent = cuisine + mealType;
-}
-
-function filterMeals(event) {}
-
-function old(event) {
-  console.log(event.target.id);
-  if (event.target.id == "cuisine" && event.target.id != "All") {
-    cuisine = event.target.value;
-    const uniqueCuisines = Array.from(new Set(filteredData.map((recipe) => recipe.cuisine)));
-    const markup = uniqueCuisines.map((element) => `<option value="${element}">${element}</option>`).join("");
-    selectCuisine.innerHTML = '<option value="All">All</option>' + markup;
-    filteredData = filteredData.filter((recipe) => recipe.cuisine == cuisine);
-  } else if (event.target.id == "mealType" && event.target.id != "All") {
-    mealType = event.target.value;
-    const uniqueMTypes = Array.from(new Set(filteredData.map((recipe) => recipe.mealType[0])));
-    const markup = uniqueMTypes.map((element) => `<option value="${element}">${element}</option>`).join("");
-    selectMealType.innerHTML = '<option value="All">All</option>' + markup;
-    filteredData = filteredData.filter((recipe) => recipe.mealType.includes(mealType));
-  } else {
-    filteredData = allRecipes;
-  }
-  visListe(filteredData);
-  h2.textContent = cuisine + " / " + mealType + "  (" + filteredMealtypeData.length + ")";
+  h2.textContent = cuisine + " / " + mealType;
 }
