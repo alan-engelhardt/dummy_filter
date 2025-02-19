@@ -37,24 +37,26 @@ function buildSelects() {
 //<img src="${opskrift.image}" alt="meal">
 
 function visListe(data, event) {
+  console.log(event.target.value);
   const markup = data
     .filter((opskrift) => {
       if (event) {
         if (event.target.id == "cuisine") {
           cuisine = event.target.value;
-          if (cuisine == "All") {
-            return true;
+          if (mealType != "All") {
+            return opskrift.cuisine == cuisine && opskrift.mealType[0] == mealType;
           } else {
             return opskrift.cuisine == cuisine;
           }
         } else if (event.target.id == "mealType") {
           mealType = event.target.value;
-          if (mealType == "All") {
-            return true;
+          if (cuisine != "All") {
+            return opskrift.mealType[0] == mealType && opskrift.cuisine == cuisine;
           } else {
             return opskrift.mealType[0] == mealType;
           }
-        } else {
+        } else if (cuisine == "All" && mealType == "All") {
+          console.log(event.target);
           return true;
         }
       } else {
