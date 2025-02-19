@@ -44,13 +44,13 @@ function visListe(data, event) {
           mealType = event.target.value;
         }
         if (cuisine == "All" && mealType != "All") {
-          return opskrift.mealType[0] == mealType;
+          return opskrift.mealType.includes(mealType);
         } else if (mealType == "All" && cuisine != "All") {
           return opskrift.cuisine == cuisine;
         } else if (cuisine == "All" && mealType == "All") {
           return true;
         } else {
-          return opskrift.cuisine == cuisine && opskrift.mealType[0] == mealType;
+          return opskrift.cuisine == cuisine && opskrift.mealType.includes(mealType);
         }
       } else {
         return true;
