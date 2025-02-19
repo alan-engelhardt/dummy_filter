@@ -10,3 +10,10 @@ select {
   margin-right: 1rem;
   margin-left: 0.3rem;
 }
+
+article {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
+  gap: 0;
+}
