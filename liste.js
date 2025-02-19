@@ -33,8 +33,6 @@ function buildSelects() {
   selectMealType.innerHTML += markup2;
 }
 
-//<img src="${opskrift.image}" alt="meal">
-
 function visListe(data, event) {
   const markup = data
     .filter((opskrift) => {
@@ -60,10 +58,10 @@ function visListe(data, event) {
     .map(
       (opskrift) => `        
       <article>
-      <img src="${opskrift.image}" alt="meal">
-    <h2>${opskrift.name}</h2>
-            <p>${opskrift.cuisine}</p>
-            <p>${opskrift.mealType}</p>
+          <img src="${opskrift.image}" alt="meal">
+          <h2>${opskrift.name}</h2>
+          <p>${opskrift.cuisine}</p>
+          <p>${opskrift.mealType}</p>
         </article>`
     )
     .join("");
