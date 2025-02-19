@@ -1,7 +1,7 @@
 main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
+  gap: 1.5rem;
   img {
     width: 100%;
   }
@@ -9,4 +9,16 @@ main {
 select {
   margin-right: 1rem;
   margin-left: 0.3rem;
+}
+
+article {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
+  gap: 0;
+  p,
+  h2 {
+    padding: 0.3rem 0;
+    margin: 0;
+  }
 }
