@@ -21,6 +21,9 @@ article {
     padding: 0.3rem 0;
     margin: 0;
   }
+  a {
+    text-decoration: none;
+  }
 }
 
 @media screen and (min-width: 900px) {

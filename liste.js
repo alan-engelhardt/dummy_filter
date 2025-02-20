@@ -35,7 +35,7 @@ function buildSelects() {
 
 function visListe(data, event) {
   let count = 0;
-  const selection = data
+  const markup = data
     .filter((opskrift) => {
       if (event) {
         if (event.target.id == "cuisine") {
@@ -58,19 +58,21 @@ function visListe(data, event) {
     })
     .map(
       (opskrift) => `        
-      <article>
+      <article><a href="single.html?id=${opskrift.id}">
           <img src="${opskrift.image}" alt="meal">
           <h2>${opskrift.name}</h2>
           <p>${opskrift.cuisine}</p>
-          <p>${opskrift.mealType}</p>
+          <p>${opskrift.mealType}</p></a>
         </article>`
     );
-  const counter = selection.length;
+  const counter = markup.length;
+  console.log(cuisine, mealType);
   if (counter == 0) {
     h2.textContent = `Sorry, there are no ${cuisine} ${mealType} recipes`;
+  } else if (cuisine == "All" && mealType == "All") {
+    h2.textContent = `All (${counter}) recipes`;
   } else {
-    h2.textContent = `${cuisine} ${mealType} (${counter} recipes)`;
+    h2.textContent = `${cuisine} ${mealType} (${counter}) recipes`;
   }
-  const markup = selection.join("");
-  container.innerHTML = markup;
+  container.innerHTML = markup.join("");
 }

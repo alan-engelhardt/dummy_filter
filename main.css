@@ -10,6 +10,31 @@ a {
   color: azure;
 }
 
+.backlink {
+  background-color: orange;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+summary::marker {
+  color: red;
+  font-size: 1.5em;
+  transition: 0.5s;
+  float: right;
+}
+
+details {
+  overflow: hidden;
+  max-height: 2em;
+}
+
+details[open] {
+  transition: max-height 0.5s ease-in-out;
+  max-height: 10em; /* Adjust based on content */
+}
+
 @media screen and (min-width: 900px) {
   body {
     margin: auto;
