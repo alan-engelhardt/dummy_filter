@@ -23,6 +23,13 @@ details {
   border: 1px solid;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
+  overflow: hidden;
+  max-height: 2em;
+  transition: max-height 0.8s;
+}
+
+details[open] {
+  max-height: 100em; /* Adjust based on content */
 }
 
 summary {
@@ -34,12 +41,12 @@ summary {
 summary::before {
   position: absolute;
   right: 0;
+  color: orange;
   content: "▶"; /* Closed arrow */
   font-size: 1.2em;
   margin-right: 8px;
   display: inline-block;
   rotate: 90deg; /* Rotates the arrow */
-  transition: 0.3s ease;
 }
 
 details[open] summary::before {
