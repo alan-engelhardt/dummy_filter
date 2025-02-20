@@ -35,7 +35,7 @@ function buildSelects() {
 
 function visListe(data, event) {
   let count = 0;
-  const markup = data
+  const selection = data
     .filter((opskrift) => {
       if (event) {
         if (event.target.id == "cuisine") {
@@ -64,13 +64,13 @@ function visListe(data, event) {
           <p>${opskrift.cuisine}</p>
           <p>${opskrift.mealType}</p>
         </article>`
-    )
-    .join("");
-  container.innerHTML = markup;
-  if (markup == "") {
-    console.log("no meals");
-    h2.textContent = "Sorry, there are no " + cuisine + " " + mealType + " recipes";
+    );
+  const counter = selection.length;
+  if (counter == 0) {
+    h2.textContent = `Sorry, there are no ${cuisine} ${mealType} recipes`;
   } else {
-    h2.textContent = cuisine + " " + mealType;
+    h2.textContent = `${cuisine} ${mealType} (${counter} recipes)`;
   }
+  const markup = selection.join("");
+  container.innerHTML = markup;
 }
