@@ -18,21 +18,33 @@ a {
   border-radius: 1rem;
 }
 
-summary::marker {
-  color: red;
-  font-size: 1.5em;
-  transition: 0.5s;
-  float: right;
-}
-
 details {
-  overflow: hidden;
-  max-height: 2em;
+  max-width: 500px;
+  border: 1px solid;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-details[open] {
-  transition: max-height 0.5s ease-in-out;
-  max-height: 10em; /* Adjust based on content */
+summary {
+  list-style: none; /* Remove default arrow */
+  cursor: pointer;
+  position: relative;
+}
+
+summary::before {
+  position: absolute;
+  right: 0;
+  content: "▶"; /* Closed arrow */
+  font-size: 1.2em;
+  margin-right: 8px;
+  display: inline-block;
+  rotate: 90deg; /* Rotates the arrow */
+  transition: 0.3s ease;
+}
+
+details[open] summary::before {
+  content: "▶"; /* Open arrow */
+  rotate: -90deg; /* Rotates the arrow */
 }
 
 @media screen and (min-width: 900px) {
