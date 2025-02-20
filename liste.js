@@ -26,7 +26,7 @@ hentData();
 
 function buildSelects() {
   const uniqueCuisines = Array.from(new Set(allRecipes.map((recipe) => recipe.cuisine)));
-  const markup = uniqueCuisines.map((cuisine) => ` <option value="${cuisine}">${cuisine}</option>`).join("");
+  const markup = uniqueCuisines.map((cuisine) => ` <option>${cuisine}</option>`).join("");
   selectCuisine.innerHTML += markup;
   const uniqueMTypes = Array.from(new Set(allRecipes.map((recipe) => recipe.mealType[0])));
   const markup2 = uniqueMTypes.map((element) => ` <option value="${element}">${element}</option>`).join("");
