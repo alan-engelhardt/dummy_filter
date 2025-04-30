@@ -2,12 +2,11 @@ const container = document.querySelector("main");
 const h2 = document.querySelector("h2");
 const selectCuisine = document.querySelector("#cuisine");
 const selectMealType = document.querySelector("#mealType");
-selectCuisine.addEventListener("change", filterCuisine);
-selectMealType.addEventListener("change", filterMealType);
-const url = "https://dummyjson.com/recipes?limit=0"; // limit=0 henter alle 50 opskrifter
+selectCuisine.addEventListener("change", (e) => visListe(allRecipes, e));
+selectMealType.addEventListener("change", (e) => visListe(allRecipes, e));
+const url = "https://dummyjson.com/recipes?limit=0";
 
 let allRecipes,
-  filteredData,
   cuisine = "All",
   mealType = "All";
 
@@ -25,24 +24,41 @@ function hentData() {
 hentData();
 
 function buildSelects() {
-  // Først dannes et nyt array med en liste over cuisine (kun en gang hver)
   const uniqueCuisines = Array.from(new Set(allRecipes.map((recipe) => recipe.cuisine)));
-  // Herefter dannes en select-liste med de cuisines der findes i det hentede data
   const markup = uniqueCuisines.map((cuisine) => ` <option value="${cuisine}">${cuisine}</option>`).join("");
   selectCuisine.innerHTML += markup;
-
-  // Her dannes en anden select-liste med de mealTypes der findes i det hentede data på samme måde
   const uniqueMTypes = Array.from(new Set(allRecipes.map((recipe) => recipe.mealType[0])));
   const markup2 = uniqueMTypes.map((element) => ` <option value="${element}">${element}</option>`).join("");
   selectMealType.innerHTML += markup2;
 }
 
-function visListe(data) {
+//<img src="${opskrift.image}" alt="meal">
+
+function visListe(data, event) {
   const markup = data
+    .filter((opskrift) => {
+      if (event) {
+        if (event.target.id == "cuisine") {
+          cuisine = event.target.value;
+        } else if (event.target.id == "mealType") {
+          mealType = event.target.value;
+        }
+        if (cuisine == "All" && mealType != "All") {
+          return opskrift.mealType.includes(mealType);
+        } else if (mealType == "All" && cuisine != "All") {
+          return opskrift.cuisine == cuisine;
+        } else if (cuisine == "All" && mealType == "All") {
+          return true;
+        } else {
+          return opskrift.cuisine == cuisine && opskrift.mealType.includes(mealType);
+        }
+      } else {
+        return true;
+      }
+    })
     .map(
       (opskrift) => `        
       <article>
-    <img src="${opskrift.image}" alt="meal">
     <h2>${opskrift.name}</h2>
             <p>${opskrift.cuisine}</p>
             <p>${opskrift.mealType}</p>
@@ -50,42 +66,5 @@ function visListe(data) {
     )
     .join("");
   container.innerHTML = markup;
-  h2.textContent = cuisine + " (" + data.length + ")"; // data.length giver antallet af opskrifter på listen
-}
-
-function filterCuisine(event) {
-  // Hvilken cuisine er valgt på select-listen?
-  cuisine = event.target.value;
-  if (cuisine == "All") {
-    filteredData = allRecipes;
-  } else {
-    // hvis der valgt andet end "All" filtreres data med den valgte cuisine
-    filteredData = allRecipes.filter((recipe) => recipe.cuisine == cuisine);
-  }
-  // Det filtrerede data vises
-  visListe(filteredData);
-
-  // overskriften rettes så den viser, hvad der er valgt
-  h2.textContent = cuisine + " (" + filteredData.length + ")";
-
-  // Når opskrifterne er filtreret dannes en ny liste med kun de mealTypes der findes i det filtrerede data:
-  const uniqueMTypes = Array.from(new Set(filteredData.map((recipe) => recipe.mealType[0])));
-  const markup = uniqueMTypes.map((element) => `<option value="${element}">${element}</option>`).join("");
-  selectMealType.innerHTML = '<option value="All">All</option>' + markup;
-}
-
-function filterMealType(event) {
-  // Hvilken mealType er valgt på select-listen?
-  mealType = event.target.value;
-  if (mealType == "All") {
-    visListe(filteredData);
-  } else {
-    // Her filtreres det allerede filtrerede data efter den valgte mealType
-    const filteredMealtypeData = filteredData.filter((recipe) => recipe.mealType.includes(mealType));
-    // Det filtrerede data vises
-    visListe(filteredMealtypeData);
-
-    // overskriften rettes så den viser, hvad der er valgt. Med .length vises antallet af opskrifter på den aktuelle liste
-    h2.textContent = cuisine + " / " + mealType + "  (" + filteredMealtypeData.length + ")";
-  }
+  h2.textContent = cuisine + " / " + mealType;
 }
